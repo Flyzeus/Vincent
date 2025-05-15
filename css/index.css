@@ -295,7 +295,7 @@
 		}
 		
 		body.dark section.hero {
-			background: url(../image/Qing.jpg) no-repeat center center;
+			background: url(../image/bg.jpg) no-repeat center center;
 			background-size: cover;
 			background-position: center;
 			background-attachment: fixed;
