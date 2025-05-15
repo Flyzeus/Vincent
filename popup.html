@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex</title>
+
+    <!-- Poppins Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+		* {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+		}
+		
+		body {
+			font-family: 'Poppins', sans-serif;
+		}
+		
+		body.dark {
+			background-color: #111;
+		}
+		
+		body::-webkit-scrollbar {
+			width: 10px;
+		}
+		
+		body::-webkit-scrollbar-track {
+			background-color: #ccc;
+		}
+		
+		body.dark::-webkit-scrollbar-track {
+			background-color: #222;
+		}
+		
+		body::-webkit-scrollbar-thumb {
+			background-color: #e47c05;
+			border-radius: 2px;
+		}
+		
+		h1.title {
+			margin: 20px auto 100px auto;
+			font-size: 46px;
+			width: fit-content;
+			position: relative;
+		}
+		
+		body.dark h1.title {
+			color: #ccc;
+		}
+		
+		h1.title::after {
+			content: "";
+			position: absolute;
+			bottom: -10px;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 50%;
+			height: 2px;
+			border-radius: 30px;
+			background-color: #e47c05;
+		}
+		
+		h1.title span {
+			color: #e47c05;
+		}
+		
+		button.btn {
+			font-size: 16px;
+			font-weight: 500;
+			font-family: "Poppins", sans-serif;
+			width: 160px;
+			height: 40px;
+			border: 2px solid #e47c05;
+			border-radius: 30px;
+			background-color: #e47c05;
+			color: white;
+			cursor: pointer;
+			transition: .25s;
+		}
+		
+		button.btn:hover {
+			background: transparent;
+			color: #e47c05;
+		}
+		
+		/* __________ 开始预加载动画 __________ */
+		
+		.preloader {
+			background-color: #fff;
+			bottom: 0;
+			left: 0;
+			position: fixed;
+			right: 0;
+			top: 0;
+			z-index: 99999;
+		}
+		
+		.preloader.dark_preloader {
+			background-color: #fff;
+			bottom: 0;
+			left: 0;
+			position: fixed;
+			right: 0;
+			top: 0;
+			z-index: 99999;
+		}
+		
+		body.dark .preloader.dark_preloader {
+			background-color: #000;
+		}
+		
+		.spinner {
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: -25px 0 0 -25px;
+			font-size: 10px;
+			text-indent: -12345px;
+			z-index: 10000;
+		}
+		
+		.double-bounce1,
+		.double-bounce2 {
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			background-color: #fff;
+			opacity: 0.6;
+			position: absolute;
+			top: 0;
+			left: 0;
+		
+			-webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+			animation: sk-bounce 2.0s infinite ease-in-out;
+		}
+		
+		body.dark .double-bounce1,
+		.double-bounce2 {
+			background-color: #000;
+		}
+		
+		.dark_preloader .double-bounce1,
+		.double-bounce2 {
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			background-color: #e47c05;
+			opacity: 0.6;
+			position: absolute;
+			top: 0;
+			left: 0;
+		
+			-webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+			animation: sk-bounce 2.0s infinite ease-in-out;
+		}
+		
+		.double-bounce2 {
+			-webkit-animation-delay: -1.0s;
+			animation-delay: -1.0s;
+		}
+		
+		@-webkit-keyframes sk-bounce {
+		
+			0%,
+			100% {
+				-webkit-transform: scale(0.0)
+			}
+		
+			50% {
+				-webkit-transform: scale(1.0)
+			}
+		}
+		
+		@keyframes sk-bounce {
+		
+			0%,
+			100% {
+				transform: scale(0.0);
+				-webkit-transform: scale(0.0);
+			}
+		
+			50% {
+				transform: scale(1.0);
+				-webkit-transform: scale(1.0);
+			}
+		}
+		
+		/* __________ 结束预加载动画 __________ */
+		
+		/* __________ 开始头部导航 __________ */
+		
+		header {
+			width: 100%;
+			height: 10vh;
+			display: flex;
+			align-items: center;
+			position: absolute;
+			top: 0;
+			right: 0;
+			z-index: 10;
+		}
+		
+		.navbar {
+			width: 80%;
+			margin: auto;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+		
+		.navbar .logo {
+			text-decoration: none;
+			font-size: 30px;
+			font-weight: 800;
+			color: #e47c05;
+		}
+		
+		.navbar .list {
+			display: flex;
+			align-items: center;
+			list-style: none;
+		}
+		
+		.navbar .list li {
+			padding: 10px 15px;
+		}
+		
+		.navbar .list a {
+			text-decoration: none;
+			color: black;
+			font-size: 16px;
+			font-weight: 600;
+			transition: .25s;
+			position: relative;
+		}
+		
+		body.dark .navbar .list a {
+			color: #ccc;
+			padding-bottom: 6px;
+		}
+		
+		.navbar .list a::before,
+		.navbar .list a::after {
+			content: "";
+			width: 0;
+			height: 2px;
+			position: absolute;
+			bottom: 0;
+			background-color: #e47c05;
+			transition: .25s;
+		}
+		
+		.navbar .list a::before {
+			left: 50%;
+		}
+		
+		.navbar .list a::after {
+			right: 50%;
+		}
+		
+		.navbar .list a:hover::before,
+		.navbar .list a.active::before {
+			width: 50%;
+		}
+		
+		.navbar .list a:hover::after,
+		.navbar .list a.active::after {
+			width: 50%;
+		}
+		
+		.navbar .list a:hover {
+			color: #e47c05;
+		}
+		
+		#menu-btn {
+			display: none;
+		}
+		
+		#navbar-sticky {
+			position: fixed;
+			top: 0;
+			background-color: white;
+			height: 8vh;
+			animation: fadeInDown 1s both 0.2s;
+		}
+		
+		body.dark #navbar-sticky {
+			background-color: #111;
+		}
+		
+		/* __________ 结束头部导航 __________ */
+		
+		/* __________ 开始英雄区域 __________ */
+		
+		section.hero {
+			width: 100%;
+			height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		
+		body.dark section.hero {
+			background: url(./static/image/Qing.jpg) no-repeat center center;
+			background-size: cover;
+			background-position: center;
+			background-attachment: fixed;
+		}
+		
+		.hero .container {
+			width: 80%;
+			margin: auto;
+			color: white;
+			text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+		}
+		
+		.hero .greeting {
+			position: relative;
+			z-index: 1;
+		}
+		
+		.hero .greeting::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			transform: translate(-40%, -20%);
+			width: 2rem;
+			height: 2rem;
+			background-color: #e47c05;
+			border-radius: 50%;
+			z-index: -1;
+		}
+		
+		.hero .name {
+			font-size: 46px;
+		}
+		
+		body.dark .hero .greeting,
+		body.dark .hero .name,
+		body.dark .hero .profession {
+			color: #fff;
+		}
+		
+		.hero .profession {
+			font-size: 24px;
+		}
+		
+		.hero .description {
+			margin-top: 20px;
+			width: 50%;
+			line-height: 150%;
+			letter-spacing: 0.5px;
+			color: #eee;
+		}
+		
+		body.dark .hero .description {
+			color: #ddd;
+		}
+		
+		.hero button {
+			margin-top: 40px;
+		}
+		
+		#prof {
+			color: #e47c05;
+		}
+		
+		/* __________ 结束英雄区域 __________ */
+		
+		/* __________ 开始关于我 __________ */
+		
+		section.about {
+			width: 100%;
+			margin-bottom: 150px;
+		}
+		
+		.about .container {
+			width: 80%;
+			margin: auto;
+			display: flex;
+			align-items: stretch; /* 修改为stretch使两侧高度一致 */
+			justify-content: space-between;
+			gap: 40px; /* 添加间距 */
+		}
+		
+		.about .image {
+			display: flex;
+			background-color: black;
+			padding-left: 100px;
+			position: relative;
+			z-index: 1;
+			height: auto; /* 自动高度 */
+			align-items: center; /* 垂直居中 */
+		}
+		
+		.about .image::after,
+		.about .image::before {
+			content: "";
+			width: 12vw;
+			height: 12vw;
+			border-radius: 50%;
+			background-color: #e47c05;
+			position: absolute;
+			z-index: -1;
+			opacity: 0;
+		}
+		
+		.about .image::before {
+			top: 0;
+			left: 0;
+			transform: translate(-20%, -20%);
+		}
+		
+		.about .image::after {
+			bottom: 0;
+			right: 0;
+			transform: translate(20%, 20%);
+		}
+		
+		.about .image img {
+			width: 100%;
+			height: auto;
+			max-height: 500px; /* 限制最大高度 */
+			object-fit: contain; /* 保持比例 */
+		}
+		
+		.about .text {
+			width: 50%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center; /* 垂直居中内容 */
+		}
+		
+		.about .text .heading {
+			font-size: 30px;
+		}
+		
+		.about .text .description {
+			margin-top: 20px;
+			line-height: 200%;
+			letter-spacing: 0.5px;
+			color: #333;
+		}
+		
+		body.dark .about .text,
+		body.dark .about .text .description,
+		body.dark .about .text .detail td {
+			color: #aaa;
+		}
+		
+		.about .text .detail {
+			margin-top: 20px;
+			letter-spacing: 0.5px;
+		}
+		
+		.about .text .detail td {
+			padding: 8px 10px;
+		}
+		
+		.about .text .ans {
+			color: #333;
+		}
+		
+		.about .text .btn {
+			margin-top: 20px;
+		}
+		
+		/* __________ 结束关于我 __________ */
+		
+		/* __________ 开始服务技能 __________ */
+		
+		section.service {
+			width: 100%;
+			margin-bottom: 150px;
+		}
+		
+		.service .container {
+			width: 80%;
+			margin: auto;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: center;
+			gap: 20px;
+		}
+		
+		.service .card {
+			text-align: center;
+			width: 24vw;
+			padding: 30px 20px;
+			border: 1px solid #bbb;
+			border-radius: 5px;
+			transition: .25s;
+			cursor: pointer;
+		}
+		
+		body.dark .service .card {
+			border-color: #222;
+		}
+		
+		.service .card .icon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 70px;
+			height: 70px;
+			margin: auto;
+			background-color: #ccc;
+			border-radius: 20px;
+			transition: .25s;
+			background-color: #e47c05cc;
+		}
+		
+		body.dark .service .card .icon {
+			background-color: #e47c05;
+		}
+		
+		.service .card .icon i {
+			font-size: 36px;
+			color: white;
+		}
+		
+		.service .card:hover {
+			background-color: #e47c0550;
+		}
+		
+		body.dark .service .card:hover {
+			background-color: #e47c0510;
+		}
+		
+		.service .card:hover .icon {
+			background-color: #e47c05;
+			transform: scale(1.1);
+		}
+		
+		.service .card .heading {
+			margin-top: 20px;
+			font-size: 22px;
+			font-weight: 500;
+		}
+		
+		body.dark .card .heading {
+			color: #ccc;
+		}
+		
+		.service .card .description {
+			margin-top: 20px;
+			font-size: 15px;
+			font-weight: 400;
+			color: #333;
+			line-height: 150%;
+		}
+		
+		body.dark .card .description {
+			color: #aaa;
+		}
+		
+		/* 技能弹窗样式 */
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 1000;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(0,0,0,0.8);
+		}
+		
+		.modal-open {
+			overflow: hidden;
+		}
+		
+		.modal-content {
+			background-color: #fefefe;
+			margin: 5% auto;
+			padding: 30px;
+			border-radius: 10px;
+			width: 80%;
+			max-width: 1000px;
+			position: relative;
+			animation: modalopen 0.5s;
+		}
+		
+		body.dark .modal-content {
+			background-color: #222;
+			color: #fff;
+		}
+		
+		.close {
+			color: #aaa;
+			position: absolute;
+			top: 20px;
+			right: 25px;
+			font-size: 28px;
+			font-weight: bold;
+			cursor: pointer;
+			z-index: 2;
+		}
+		
+		.close:hover {
+			color: #e47c05;
+		}
+		
+		.modal-header {
+			position: sticky;
+			top: 0;
+			background-color: inherit;
+			padding-bottom: 20px;
+			z-index: 1;
+		}
+		
+		.modal-title {
+			font-size: 28px;
+			margin-bottom: 20px;
+			color: #e47c05;
+			text-align: center;
+		}
+		
+		/* 确保滚动容器设置正确 */
+		.portfolio-container {
+		  max-height: 60vh;
+		  overflow-y: auto;
+		  overscroll-behavior: contain; /* 防止滚动传播 */
+		  position: relative; /* 确保滚动上下文 */
+		}
+		
+		.modal-content {
+		  overflow: hidden; /* 防止双重滚动 */
+		}
+		
+		.portfolio-grid {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 20px;
+		}
+		
+		.portfolio-item {
+			position: relative;
+			overflow: hidden;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+			transition: transform 0.3s;
+			cursor: pointer;
+			aspect-ratio: 1/1;
+		}
+		
+		.portfolio-item:hover {
+			transform: scale(1.05);
+		}
+		
+		.portfolio-item img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+		}
+		
+		.portfolio-overlay {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: rgba(0,0,0,0.7);
+			color: white;
+			padding: 10px;
+			transform: translateY(100%);
+			transition: transform 0.3s;
+		}
+		
+		.portfolio-item:hover .portfolio-overlay {
+			transform: translateY(0);
+		}
+		
+		/* 作品详情弹窗 */
+		.work-modal {
+			display: none;
+			position: fixed;
+			z-index: 1001;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0,0,0,0.9);
+			overflow: auto;
+		}
+		
+		.work-modal-content {
+			margin: auto;
+			display: block;
+			max-width: 90%;
+			max-height: 90vh;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			animation: zoom 0.3s;
+		}
+		
+		.work-modal-close {
+			position: absolute;
+			top: 15px;
+			right: 35px;
+			color: #f1f1f1;
+			font-size: 40px;
+			font-weight: bold;
+			transition: 0.3s;
+			cursor: pointer;
+			z-index: 2;
+		}
+		
+		.work-modal-close:hover {
+			color: #e47c05;
+		}
+		
+		/* 视频播放器样式 */
+		.video-container {
+			position: relative;
+			width: 100%;
+			max-width: 800px;
+			margin: 350px auto 0px;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+		
+		.video-player {
+			width: 100%;
+			height: auto;
+		}
+		
+		/* 博客弹窗样式 */
+		.blog-modal-content {
+			background-color: #fefefe;
+			margin: 5% auto;
+			padding: 30px;
+			border-radius: 10px;
+			width: 100%;
+			max-width: 1000px;
+			position: relative;
+			animation: modalopen 0.5s;
+		}
+		
+		body.dark .blog-modal-content {
+			background-color: #222;
+			color: #fff;
+		}
+		
+		.blog-modal-img {
+			width: 100%;
+			max-height: 400px;
+			object-fit: cover;
+			border-radius: 8px;
+			margin: 20px auto;
+			cursor: pointer;
+		}
+		
+		.blog-modal-title {
+			font-size: 28px;
+			margin-bottom: 15px;
+			color: #e47c05;
+		}
+		
+		.blog-modal-date {
+			font-size: 14px;
+			color: #777;
+			margin-bottom: 20px;
+			display: block;
+		}
+		
+		body.dark .blog-modal-date {
+			color: #aaa;
+		}
+		
+		.blog-modal-text {
+			line-height: 1.8;
+			font-size: 16px;
+		}
+		
+		.blog-modal-close {
+			position: absolute;
+			top: 10px;
+			right: 20px;
+			color: #aaa;
+			font-size: 28px;
+			font-weight: bold;
+			cursor: pointer;
+			z-index: 1;
+		}
+		
+		.blog-modal-close:hover {
+			color: #e47c05;
+		}
+		
+		@keyframes modalopen {
+			from {opacity: 0; transform: translateY(-50px);}
+			to {opacity: 1; transform: translateY(0);}
+		}
+		
+		@keyframes zoom {
+			from {transform: translate(-50%, -50%) scale(0);}
+			to {transform: translate(-50%, -50%) scale(1);}
+		}
+		
+		/* __________ 结束服务技能 __________ */
+		
+		/* __________ 开始简历经历 __________ */
+		
+		section.resume {
+			width: 100%;
+			margin-bottom: 150px;
+		}
+		
+		.resume .container {
+			width: 80%;
+			margin: auto;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+		}
+		
+		.resume .section {
+			width: 100%;
+			padding: 20px;
+		}
+		
+		.resume .section .title {
+			font-size: 30px;
+		}
+		
+		body.dark .resume .section .title,
+		body.dark .resume .card .heading {
+			color: #ccc;
+		}
+		
+		.resume .card {
+			padding: 30px;
+			border: 1px solid #bbb;
+			border-radius: 10px;
+			transition: .25s;
+			margin-top: 2vw;
+			float: left;
+		}
+		
+		.card.first {
+		    margin-top: 0;
+		}
+		
+		body.dark .card {
+			border-color: #333;
+		}
+		
+		.resume .card:hover {
+			border-color: #e47c05;
+		}
+		
+		.resume .card .heading {
+			font-size: 20px;
+		}
+		
+		.resume .card .year {
+			margin-top: 10px;
+			font-size: 16px;
+		}
+		
+		.resume .card .description {
+			margin-top: 10px;
+			font-size: 16px;
+			line-height: 150%;
+			color: #333;
+		}
+		
+		body.dark .resume .card .year,
+		body.dark .resume .card .description {
+			color: #aaa;
+		}
+		
+		body.dark .resume .card:hover {
+			border-color: #e47c0550;
+		}
+		
+		/* __________ 结束简历经历 __________ */
+		
+		/* __________ 开始客户评价 __________ */
+		
+		section.testimonial {
+			width: 100%;
+			margin-bottom: 150px;
+		}
+		
+		.testimonial .container {
+			width: 80%;
+			margin: auto;
+		}
+		
+		.testimonial .card {
+			width: 24vw;
+		}
+		
+		.testimonial .card .image {
+			display: flex;
+			width: 10vw;
+			border-radius: 50%;
+			overflow: hidden;
+			background-color: #fff;
+			margin: auto;
+		}
+		
+		.testimonial .card .image img {
+			display: block;
+			width: 100%;
+		}
+		
+		.testimonial .card .text {
+			text-align: center;
+		}
+		
+		.testimonial .card .text .name {
+			margin-top: 20px;
+			font-size: 24px;
+			font-weight: 600;
+		}
+		
+		.testimonial .card .text .prof {
+			margin-top: 10px;
+			font-size: 20px;
+			font-weight: 500;
+		}
+		
+		.testimonial .card .text .stars {
+			margin-top: 10px;
+		}
+		
+		.testimonial .card .text .stars i {
+			color: #e47c05;
+			font-size: 16px;
+		}
+		
+		.testimonial .card .text .description {
+			margin-top: 10px;
+			font-size: 16px;
+			line-height: 150%;
+			color: #333;
+		
+		}
+		
+		body.dark .testimonial .card .text .name,
+		body.dark .testimonial .card .text .prof {
+			color: #ccc;
+		}
+		
+		body.dark .testimonial .card .text .description {
+			color: #aaa;
+		}
+		
+		/* __________ 结束客户评价 __________ */
+		
+		/* __________ 开始博客文章 __________ */
+		
+		section.blog {
+			width: 100%;
+			margin-bottom: 150px;
+		}
+		
+		.blog .container {
+			width: 80%;
+			margin: auto;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+		}
+		
+		.blog .card {
+			width: 25vw;
+		}
+		
+		.blog .card .image {
+			display: flex;
+			overflow: hidden;
+			border-radius: 5px;
+		}
+		
+		.blog .card .image img {
+			width: 25vw;
+			cursor: pointer;
+			transition: .25s;
+		}
+		
+		.blog .card:hover img {
+			transform: scale(1.1);
+		}
+		
+		.blog .card .text {
+			margin-top: 10px;
+			/* border-bottom: 0.5px solid rgba(228, 124, 5, 0.5); */
+		}
+		
+		.blog .card .text .date {
+			font-size: 12px;
+		}
+		
+		body.dark .blog .card .text .date {
+			color: #ccc;
+		}
+		
+		.blog .card .text .heading {
+			margin-top: 20px;
+			font-size: 22px;
+			cursor: pointer;
+			transition: .25s;
+		}
+		
+		.blog .card .text .heading:hover {
+			color: #e47c05;
+		}
+		
+		.blog .card .text .description {
+			margin-top: 10px;
+			padding-bottom: 20px;
+			border-bottom: #e47c05;
+			font-size: 16px;
+			line-height: 150%;
+			color: #333;
+			width: 90%;
+		}
+		
+		body.dark .blog .card .text .description {
+			color: #aaa;
+		}
+		
+		/* __________ 结束博客文章 __________ */
+		
+		
+		/* __________ 开始页脚 __________ */
+		
+		footer {
+			width: 100%;
+			height: 10vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: #e47c05;
+		}
+		
+		footer a {
+			text-decoration: none;
+			color: black;
+		}
+		
+		/* __________ 结束页脚 __________ */
+		
+		/* __________ 返回顶部 __________ */
+		.back-to-top {
+		  position: fixed;
+		  bottom: 30px;
+		  right: 30px;
+		  width: 50px;
+		  height: 50px;
+		  background-color: #e47c05;
+		  color: white;
+		  border: none;
+		  border-radius: 50%;
+		  font-size: 20px;
+		  cursor: pointer;
+		  opacity: 0;
+		  transition: opacity 0.3s, transform 0.3s;
+		  z-index: 99;
+		  display: flex;
+		  align-items: center;
+		  justify-content: center;
+		  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+		}
+		
+		.back-to-top:hover {
+		  background-color: #d67000; /* 悬停时稍深的橙色 */
+		  transform: translateY(-5px);
+		}
+		
+		.back-to-top.visible {
+		  opacity: 1;
+		}
+		
+		/* __________ 结束返回顶部 __________ */
+	</style>
+  </head>
+
+  <body class="dark">
+    <!-- 开始预加载动画 -->
+    <div class="preloader dark_preloader">
+      <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+      </div>
+    </div>
+    <!-- 结束预加载动画 -->
+
+    <!-- 开始头部导航 -->
+    <header>
+      <div class="navbar">
+        <a href="#" class="logo">Flyx</a>
+
+        <ul class="list">
+          <li><a href="#home" class="nav-link">我的山头儿</a></li>
+          <li><a href="#about" class="nav-link">逍遥派掌门</a></li>
+          <li><a href="#service" class="nav-link">十八般武艺</a></li>
+          <li><a href="#resume" class="nav-link">江湖闯荡</a></li>
+          <li><a href="#blog" class="nav-link">无名客栈</a></li>
+        </ul>
+
+        <i id="menu-btn" class="fa-solid fa-bars"></i>
+      </div>
+    </header>
+    <!-- 结束头部导航 -->
+
+    <!-- 开始主页区域 -->
+    <section class="hero" id="home">
+      <div class="container">
+        <h3 class="greeting">你好</h3>
+        <h1 class="name">欢迎来到只属于Flyx的世界<span></span></h1>
+        <h2 class="profession">我是<span id="prof"></span></h2>
+        <p class="description">
+          伟大的设计来自于灵感，伟大的灵感来自于借鉴，不会唱歌的程序员，不是一名好的设计师！
+        </p>
+      </div>
+    </section>
+    <!-- 结束主页区域 -->
+
+    <!-- 开始关于我 -->
+    <section class="about" id="about">
+      <h1 class="title">关于 <span>我</span></h1>
+      <div class="container">
+        <div class="image">
+          <img src="./static/picture/about.png" alt="个人照片">
+        </div>
+
+        <div class="text">
+          <h2 class="heading">欢迎你来认识我</h2>
+          <p class="description">
+            设计是理性的浪漫，也是克制的表达。
+            它用严谨的网格丈量灵感，用代码与色彩写诗；
+            在每一个像素的克制里，藏着一场未说出口的盛宴。
+            ——最终，让逻辑与美学在用户指尖私奔。
+          </p>
+          <table class="detail">
+            <tr>
+              <td class="que">姓名</td>
+              <td>:</td>
+              <td class="ans">帅炸苍穹铁蛋儿兄</td>
+            </tr>
+            <tr>
+              <td class="que">年龄</td>
+              <td>:</td>
+              <td class="ans">24</td>
+            </tr>
+			<tr>
+			  <td class="que">政治面貌</td>
+			  <td>:</td>
+			  <td class="ans">中共党员</td>
+			</tr>
+			<tr>
+			  <td class="que">联系电话</td>
+			  <td>:</td>
+			  <td class="ans">吉米吉米</td>
+			</tr>
+			<tr>
+			  <td class="que">毕业院校</td>
+			  <td>:</td>
+			  <td class="ans">北方工业大学</td>
+			</tr>
+            <tr>
+              <td class="que">邮件</td>
+              <td>:</td>
+              <td class="ans">吉米吉米</td>
+            </tr>
+            <tr>
+              <td class="que">地址</td>
+              <td>:</td>
+              <td class="ans">北京</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </section>
+    <!-- 结束关于我 -->
+
+    <!-- 开始服务技能 -->
+    <section class="service" id="service">
+      <h1 class="title">我的 <span>技能</span></h1>
+      <div class="container">
+        <div class="card" onclick="openPortfolioModal('网页设计作品集', [
+          {title: '小米官网设计', img: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: 'TWT社区官网', img: 'https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '企业官网设计', img: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '个人作品集网站', img: 'https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '电商网站设计', img: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '响应式设计案例', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '移动端UI设计', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '后台管理系统', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '数据可视化', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'}
+        ])">
+          <div class="icon">
+            <i class="fa-solid fa-code"></i>
+          </div>
+          <h2 class="heading">网页设计</h2>
+          <p class="description">掌握网页设计规范（栅格系统、响应式布局、色彩搭配），能根据需求设计符合品牌调性的网页视觉风格（如twt社区官网、小米官网）</p>
+        </div>
+
+        <div class="card" onclick="openPortfolioModal('平面设计作品集', [
+          {title: '品牌VI系统设计', img: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '活动海报设计', img: 'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '企业宣传册', img: 'https://images.unsplash.com/photo-1496065187959-7f07b8353c55?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: 'LOGO设计', img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '名片设计', img: 'https://images.unsplash.com/photo-1601933973783-43cf8a7d4c5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '包装设计', img: 'https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '杂志排版', img: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '社交媒体图片', img: 'https://images.unsplash.com/photo-1611162616475-465b4c42f1a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '品牌手册', img: 'https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'}
+        ])">
+          <div class="icon">
+            <i class="fa-solid fa-paintbrush"></i>
+          </div>
+          <h2 class="heading">平面设计</h2>
+          <p class="description">熟练使用 Adobe Photoshop、Illustrator 进行海报、LOGO、宣传册等设计，曾负责品牌VI系统设计（含LOGO、名片、宣传册等）</p>
+        </div>
+
+        <div class="card" onclick="openPortfolioModal('摄影作品集', [
+          {title: '自然风光摄影', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '人像摄影', img: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '商业产品摄影', img: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '街头摄影', img: 'https://images.unsplash.com/photo-1508766206391-789c16bf08b0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '建筑摄影', img: 'https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '微距摄影', img: 'https://images.unsplash.com/photo-1615789591457-74a63395c990?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '活动摄影', img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '黑白摄影', img: 'https://images.unsplash.com/photo-1502982720700-bfff97f2ecac?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '夜景摄影', img: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'}
+        ])">
+          <div class="icon">
+            <i class="fa-solid fa-gamepad"></i>
+          </div>
+          <h2 class="heading">摄影</h2>
+          <p class="description">了解构图与光影运用，擅长自然光与人造光布景，能使用 Lightroom/Photoshop 进行基础调色、人像修图及图片精修</p>
+        </div>
+
+        <div class="card" onclick="openPortfolioModal('前端开发作品集', [
+          {title: '静态页面开发', img: './static/picture/Website-01.png', type: 'image'},
+          {title: '交互效果实现', img: './static/picture/Website-02.png', type: 'image'},
+          {title: '响应式布局', img: './static/picture/Website-03.png', type: 'image'},
+          {title: 'CSS动画', img: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '表单设计', img: 'https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: 'UI组件开发', img: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '移动端适配', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '性能优化', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '数据可视化', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'}
+        ])">
+          <div class="icon">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+          <h2 class="heading">前端开发</h2>
+          <p class="description">熟悉网页设计基础，掌握HTML/CSS实现静态页面开发，了解用户体验（UX）基本原则，能设计用户友好的界面交互</p>
+        </div>
+
+        <div class="card" onclick="openPortfolioModal('人像精修作品集', [
+          {title: '商业级人像精修', img: './static/picture/Portrait-01.png', type: 'image'},
+          {title: '自然风修图', img: './static/picture/Portrait-02.png', type: 'image'},
+          {title: '杂志风修图', img: './static/picture/Portrait-03.png', type: 'image'},
+          {title: '婚纱照精修', img: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '产品精修', img: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '肤色统一处理', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '高级灰调色', img: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '商业广告修图', img: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'},
+          {title: '皮肤细节处理', img: 'https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'image'}
+        ])">
+          <div class="icon">
+            <i class="fa-solid fa-chart-column"></i>
+          </div>
+          <h2 class="heading">人像精修</h2>
+          <p class="description">熟练使用 Adobe Photoshop 进行人像精修，全面掌握调色技巧，了解不同风格修图需求（自然风、商业级、杂志风）</p>
+        </div>
+
+        <div class="card" onclick="openPortfolioModal('视频剪辑作品集', [
+          {title: '宣传片剪辑', img: 'https://images.unsplash.com/photo-1488229297570-58520851e868?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'video', video: './static/video/赛博朋克AE.mp4'},
+          {title: '活动记录视频', img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'video', video: './static/video/赛博朋克AE.mp4'},
+          {title: '产品展示视频', img: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'video', video: './static/video/赛博朋克AE.mp4'},
+          {title: '短视频制作', img: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'video', video: './static/video/赛博朋克AE.mp4'},
+          {title: '微电影剪辑', img: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'video', video: './static/video/赛博朋克AE.mp4'},
+          {title: '动画效果制作', img: 'https://images.unsplash.com/photo-1579820010410-c10411aaaa88?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'video', video: './static/video/赛博朋克AE.mp4'},
+          {title: '调色作品', img: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'video', video: './static/video/赛博朋克AE.mp4'},
+          {title: '字幕与特效', img: 'https://images.unsplash.com/photo-1551269901-5c5e14c25df7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'video', video: './static/video/赛博朋克AE.mp4'},
+          {title: '商业广告', img: 'https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80', type: 'video', video: './static/video/赛博朋克AE.mp4'}
+        ])">
+          <div class="icon">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <h2 class="heading">视频剪辑</h2>
+          <p class="description">熟练使用 Premiere Pro/After Effects进行视频剪辑，掌握时间线管理、多轨道编辑，能完成基础调色（Lumetri Color）、音频降噪等</p>
+        </div>
+      </div>
+    </section>
+    <!-- 结束服务技能 -->
+
+    <!-- 简历经历 -->
+    <section class="resume" id="resume">
+      <h1 class="title">我的 <span>经历</span></h1>
+      <div class="container">
+        <!-- 工作经历 -->
+        <div class="exp-section section">
+          <div class="exp-container">
+            <div class="card first">
+              <h2 class="heading">线上兼职以及网店</h2>
+              <p class="year">2022 - 2024</p>
+              <p class="description">
+                线上兼职：自学PS、AI线上接客户，后面报班系统培训，在培训班线上兼职（包含但不限于门店门头、活动宣传海报、公司文化墙设计、名片、电商海报及详情页等等），校园墙接兼职等，自己的淘宝修图网店等兼职经历。
+              </p>
+            </div>
+
+            <div class="card">
+              <h2 class="heading">国家工业信息安全发展研究中心</h2>
+              <p class="year">2023 - 2024</p>
+              <p class="description">
+                实习经历：主要涉及第五届中国工业互联网大赛的宣传海报设计的对接，大赛各个赛站宣传内容及开展宣传运营，负责北京赛站和无锡赛站，包括其中的会客厅活动、百炼成金-投融资活动、工赋引才活动（促成了北方工业大学和中航信、北京航天测控、中国电信北京分公司三家企业的合作关系），负责宁波总决赛的投融资沙龙活动、企业参访活动。
+              </p>
+            </div>
+
+            <div class="card">
+              <h2 class="heading">北京传诚科技有限公司</h2>
+              <p class="year">2024 - 至今</p>
+              <p class="description">
+                工作内容：包括但不限于网站内部的活动banner、活动邀请函以及易拉宝、员工名片翻新、与合作商合作的网站页面设计、活动手册设计+排版、文档美化、年度MVP礼盒设计、腰封设计、PPT美化、证书设计、成员图片精修、礼品精修等。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 结束简历经历 -->
+
+    <!-- 开始博客文章 -->
+    <section class="blog" id="blog">
+      <h1 class="title">我的 <span>博客</span></h1>
+      <div class="container">
+        <div class="card">
+          <div class="image">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                 alt="博客图片" 
+                 onclick="openBlogModal(
+                   '前端开发趋势2022',
+                   '2022年5月31日',
+                   'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                   '2022年前端开发领域继续快速发展，新技术和新理念层出不穷。作为前端开发者，了解这些趋势对职业发展和技术选型至关重要。本文将分析2022年前端开发的主要趋势和技术栈选择。\n\n1. JavaScript框架三足鼎立\nReact、Vue和Angular仍然是主流选择。React凭借其庞大的生态系统和Facebook的支持保持领先；Vue3的Composition API提升了开发体验；Angular在企业级应用中仍有稳固地位。\n\n2. TypeScript成为标配\n越来越多的项目采用TypeScript，它提供的类型系统大大提高了代码的可维护性和开发效率。预计2022年TypeScript的使用率将继续攀升。\n\n3. JAMStack架构普及\nJAMStack(JavaScript、APIs和Markup)架构因其高性能、高安全性和易扩展性受到青睐。配合静态站点生成器(如Next.js、Nuxt.js)和Headless CMS，成为许多项目的首选架构。\n\n4. Web Components崛起\n原生Web Components技术(自定义元素、Shadow DOM等)逐渐成熟，各大框架也开始更好地支持它们，这可能导致组件共享方式的变革。\n\n5. 低代码/无代码平台\n随着Figma、Webflow等工具的完善，部分前端工作可能被非技术人员完成，专业开发者需要关注更复杂的业务逻辑和性能优化。\n\n6. Web性能优化\nCore Web Vitals成为SEO排名因素，促使开发者更加重视加载性能、交互性和视觉稳定性。\n\n7. 渐进式Web应用(PWA)\nPWA技术使Web应用具备原生应用的体验，随着5G普及和硬件性能提升，其应用场景将进一步扩大。\n\n8. 微前端架构\n大型项目越来越多地采用微前端架构，实现团队自治和技术栈自由。\n\n2022年的前端开发者需要保持学习的心态，既要掌握基础技术，又要关注行业动态，才能在快速变化的环境中保持竞争力。'
+                 )">
+          </div>
+          <div class="text">
+            <label class="date"><i class="fa-regular fa-clock"></i> 2022年5月31日</label>
+            <h2 class="heading" onclick="openBlogModal(
+                   '前端开发趋势2022',
+                   '2022年5月31日',
+                   'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                   '2022年前端开发领域继续快速发展，新技术和新理念层出不穷。作为前端开发者，了解这些趋势对职业发展和技术选型至关重要。本文将分析2022年前端开发的主要趋势和技术栈选择。\n\n1. JavaScript框架三足鼎立\nReact、Vue和Angular仍然是主流选择。React凭借其庞大的生态系统和Facebook的支持保持领先；Vue3的Composition API提升了开发体验；Angular在企业级应用中仍有稳固地位。\n\n2. TypeScript成为标配\n越来越多的项目采用TypeScript，它提供的类型系统大大提高了代码的可维护性和开发效率。预计2022年TypeScript的使用率将继续攀升。\n\n3. JAMStack架构普及\nJAMStack(JavaScript、APIs和Markup)架构因其高性能、高安全性和易扩展性受到青睐。配合静态站点生成器(如Next.js、Nuxt.js)和Headless CMS，成为许多项目的首选架构。\n\n4. Web Components崛起\n原生Web Components技术(自定义元素、Shadow DOM等)逐渐成熟，各大框架也开始更好地支持它们，这可能导致组件共享方式的变革。\n\n5. 低代码/无代码平台\n随着Figma、Webflow等工具的完善，部分前端工作可能被非技术人员完成，专业开发者需要关注更复杂的业务逻辑和性能优化。\n\n6. Web性能优化\nCore Web Vitals成为SEO排名因素，促使开发者更加重视加载性能、交互性和视觉稳定性。\n\n7. 渐进式Web应用(PWA)\nPWA技术使Web应用具备原生应用的体验，随着5G普及和硬件性能提升，其应用场景将进一步扩大。\n\n8. 微前端架构\n大型项目越来越多地采用微前端架构，实现团队自治和技术栈自由。\n\n2022年的前端开发者需要保持学习的心态，既要掌握基础技术，又要关注行业动态，才能在快速变化的环境中保持竞争力。'
+                 )">前端开发趋势2022</h2>
+            <p class="description">分析2022年前端开发的主要趋势和技术栈选择，帮助开发者做出明智决策。</p>
+          </div>
+        </div>
+		<div class="card">
+          <div class="image">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                 alt="博客图片" 
+                 onclick="openBlogModal(
+                   '前端开发趋势2022',
+                   '2022年5月31日',
+                   'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                   '2022年前端开发领域继续快速发展，新技术和新理念层出不穷。作为前端开发者，了解这些趋势对职业发展和技术选型至关重要。本文将分析2022年前端开发的主要趋势和技术栈选择。\n\n1. JavaScript框架三足鼎立\nReact、Vue和Angular仍然是主流选择。React凭借其庞大的生态系统和Facebook的支持保持领先；Vue3的Composition API提升了开发体验；Angular在企业级应用中仍有稳固地位。\n\n2. TypeScript成为标配\n越来越多的项目采用TypeScript，它提供的类型系统大大提高了代码的可维护性和开发效率。预计2022年TypeScript的使用率将继续攀升。\n\n3. JAMStack架构普及\nJAMStack(JavaScript、APIs和Markup)架构因其高性能、高安全性和易扩展性受到青睐。配合静态站点生成器(如Next.js、Nuxt.js)和Headless CMS，成为许多项目的首选架构。\n\n4. Web Components崛起\n原生Web Components技术(自定义元素、Shadow DOM等)逐渐成熟，各大框架也开始更好地支持它们，这可能导致组件共享方式的变革。\n\n5. 低代码/无代码平台\n随着Figma、Webflow等工具的完善，部分前端工作可能被非技术人员完成，专业开发者需要关注更复杂的业务逻辑和性能优化。\n\n6. Web性能优化\nCore Web Vitals成为SEO排名因素，促使开发者更加重视加载性能、交互性和视觉稳定性。\n\n7. 渐进式Web应用(PWA)\nPWA技术使Web应用具备原生应用的体验，随着5G普及和硬件性能提升，其应用场景将进一步扩大。\n\n8. 微前端架构\n大型项目越来越多地采用微前端架构，实现团队自治和技术栈自由。\n\n2022年的前端开发者需要保持学习的心态，既要掌握基础技术，又要关注行业动态，才能在快速变化的环境中保持竞争力。'
+                 )">
+          </div>
+          <div class="text">
+            <label class="date"><i class="fa-regular fa-clock"></i> 2022年5月31日</label>
+            <h2 class="heading" onclick="openBlogModal(
+                   '前端开发趋势2022',
+                   '2022年5月31日',
+                   'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                   '2022年前端开发领域继续快速发展，新技术和新理念层出不穷。作为前端开发者，了解这些趋势对职业发展和技术选型至关重要。本文将分析2022年前端开发的主要趋势和技术栈选择。\n\n1. JavaScript框架三足鼎立\nReact、Vue和Angular仍然是主流选择。React凭借其庞大的生态系统和Facebook的支持保持领先；Vue3的Composition API提升了开发体验；Angular在企业级应用中仍有稳固地位。\n\n2. TypeScript成为标配\n越来越多的项目采用TypeScript，它提供的类型系统大大提高了代码的可维护性和开发效率。预计2022年TypeScript的使用率将继续攀升。\n\n3. JAMStack架构普及\nJAMStack(JavaScript、APIs和Markup)架构因其高性能、高安全性和易扩展性受到青睐。配合静态站点生成器(如Next.js、Nuxt.js)和Headless CMS，成为许多项目的首选架构。\n\n4. Web Components崛起\n原生Web Components技术(自定义元素、Shadow DOM等)逐渐成熟，各大框架也开始更好地支持它们，这可能导致组件共享方式的变革。\n\n5. 低代码/无代码平台\n随着Figma、Webflow等工具的完善，部分前端工作可能被非技术人员完成，专业开发者需要关注更复杂的业务逻辑和性能优化。\n\n6. Web性能优化\nCore Web Vitals成为SEO排名因素，促使开发者更加重视加载性能、交互性和视觉稳定性。\n\n7. 渐进式Web应用(PWA)\nPWA技术使Web应用具备原生应用的体验，随着5G普及和硬件性能提升，其应用场景将进一步扩大。\n\n8. 微前端架构\n大型项目越来越多地采用微前端架构，实现团队自治和技术栈自由。\n\n2022年的前端开发者需要保持学习的心态，既要掌握基础技术，又要关注行业动态，才能在快速变化的环境中保持竞争力。'
+                 )">前端开发趋势2022</h2>
+            <p class="description">分析2022年前端开发的主要趋势和技术栈选择，帮助开发者做出明智决策。</p>
+          </div>
+        </div>
+		<div class="card">
+          <div class="image">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                 alt="博客图片" 
+                 onclick="openBlogModal(
+                   '前端开发趋势2022',
+                   '2022年5月31日',
+                   'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                   '2022年前端开发领域继续快速发展，新技术和新理念层出不穷。作为前端开发者，了解这些趋势对职业发展和技术选型至关重要。本文将分析2022年前端开发的主要趋势和技术栈选择。\n\n1. JavaScript框架三足鼎立\nReact、Vue和Angular仍然是主流选择。React凭借其庞大的生态系统和Facebook的支持保持领先；Vue3的Composition API提升了开发体验；Angular在企业级应用中仍有稳固地位。\n\n2. TypeScript成为标配\n越来越多的项目采用TypeScript，它提供的类型系统大大提高了代码的可维护性和开发效率。预计2022年TypeScript的使用率将继续攀升。\n\n3. JAMStack架构普及\nJAMStack(JavaScript、APIs和Markup)架构因其高性能、高安全性和易扩展性受到青睐。配合静态站点生成器(如Next.js、Nuxt.js)和Headless CMS，成为许多项目的首选架构。\n\n4. Web Components崛起\n原生Web Components技术(自定义元素、Shadow DOM等)逐渐成熟，各大框架也开始更好地支持它们，这可能导致组件共享方式的变革。\n\n5. 低代码/无代码平台\n随着Figma、Webflow等工具的完善，部分前端工作可能被非技术人员完成，专业开发者需要关注更复杂的业务逻辑和性能优化。\n\n6. Web性能优化\nCore Web Vitals成为SEO排名因素，促使开发者更加重视加载性能、交互性和视觉稳定性。\n\n7. 渐进式Web应用(PWA)\nPWA技术使Web应用具备原生应用的体验，随着5G普及和硬件性能提升，其应用场景将进一步扩大。\n\n8. 微前端架构\n大型项目越来越多地采用微前端架构，实现团队自治和技术栈自由。\n\n2022年的前端开发者需要保持学习的心态，既要掌握基础技术，又要关注行业动态，才能在快速变化的环境中保持竞争力。'
+                 )">
+          </div>
+          <div class="text">
+            <label class="date"><i class="fa-regular fa-clock"></i> 2022年5月31日</label>
+            <h2 class="heading" onclick="openBlogModal(
+                   '前端开发趋势2022',
+                   '2022年5月31日',
+                   'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                   '2022年前端开发领域继续快速发展，新技术和新理念层出不穷。作为前端开发者，了解这些趋势对职业发展和技术选型至关重要。本文将分析2022年前端开发的主要趋势和技术栈选择。\n\n1. JavaScript框架三足鼎立\nReact、Vue和Angular仍然是主流选择。React凭借其庞大的生态系统和Facebook的支持保持领先；Vue3的Composition API提升了开发体验；Angular在企业级应用中仍有稳固地位。\n\n2. TypeScript成为标配\n越来越多的项目采用TypeScript，它提供的类型系统大大提高了代码的可维护性和开发效率。预计2022年TypeScript的使用率将继续攀升。\n\n3. JAMStack架构普及\nJAMStack(JavaScript、APIs和Markup)架构因其高性能、高安全性和易扩展性受到青睐。配合静态站点生成器(如Next.js、Nuxt.js)和Headless CMS，成为许多项目的首选架构。\n\n4. Web Components崛起\n原生Web Components技术(自定义元素、Shadow DOM等)逐渐成熟，各大框架也开始更好地支持它们，这可能导致组件共享方式的变革。\n\n5. 低代码/无代码平台\n随着Figma、Webflow等工具的完善，部分前端工作可能被非技术人员完成，专业开发者需要关注更复杂的业务逻辑和性能优化。\n\n6. Web性能优化\nCore Web Vitals成为SEO排名因素，促使开发者更加重视加载性能、交互性和视觉稳定性。\n\n7. 渐进式Web应用(PWA)\nPWA技术使Web应用具备原生应用的体验，随着5G普及和硬件性能提升，其应用场景将进一步扩大。\n\n8. 微前端架构\n大型项目越来越多地采用微前端架构，实现团队自治和技术栈自由。\n\n2022年的前端开发者需要保持学习的心态，既要掌握基础技术，又要关注行业动态，才能在快速变化的环境中保持竞争力。'
+                 )">前端开发趋势2022</h2>
+            <p class="description">分析2022年前端开发的主要趋势和技术栈选择，帮助开发者做出明智决策。</p>
+          </div>
+        </div>
+	  </div>
+    </section>
+    <!-- 结束博客文章 -->
+
+    <!-- 开始页脚 -->
+    <footer>
+      <p class="copyright">版权所有 &copy; 2025. 帅炸苍穹铁蛋儿兄 保留所有权利.</p>
+    </footer>
+    <!-- 结束页脚 -->
+
+    <!-- 技能作品集弹窗 -->
+    <div id="portfolioModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal('portfolioModal')">&times;</span>
+        <div class="modal-header">
+          <h2 class="modal-title" id="portfolioModalTitle"></h2>
+        </div>
+        <div class="portfolio-container">
+          <div class="portfolio-grid" id="portfolioGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 作品详情弹窗 -->
+    <div id="workModal" class="work-modal">
+      <span class="work-modal-close" onclick="closeModal('workModal')">&times;</span>
+      <div id="workModalContent"></div>
+    </div>
+
+    <!-- 博客详情弹窗 -->
+    <div id="blogModal" class="modal">
+      <div class="blog-modal-content">
+        <span class="blog-modal-close" onclick="closeModal('blogModal')">&times;</span>
+        <img class="blog-modal-img" id="blogModalImg" src="" alt="博客图片">
+        <h2 class="blog-modal-title" id="blogModalTitle"></h2>
+        <span class="blog-modal-date" id="blogModalDate"></span>
+        <p class="blog-modal-text" id="blogModalText"></p>
+      </div>
+    </div>
+	
+	<!-- 返回顶部按钮 -->
+	<button id="back-to-top" class="back-to-top" aria-label="返回顶部">
+	  <i class="fas fa-arrow-up"></i>
+	</button>
+	
+	<script>
+		// 预加载动画
+		window.addEventListener('load', function() {
+		  const preloader = document.querySelector('.preloader');
+		  preloader.style.display = 'none';
+		});
+		
+		// 打字机效果
+		document.addEventListener('DOMContentLoaded', function() {
+		  // 职业打字效果
+		  const profText = "设计师/摄影师/修图师";
+		  const profElement = document.getElementById('prof');
+		  let i = 0;
+		  
+		  function typeWriter() {
+		    if (i < profText.length) {
+		      profElement.innerHTML += profText.charAt(i);
+		      i++;
+		      setTimeout(typeWriter, 100);
+		    }
+		  }
+		  
+		  typeWriter();
+		
+		  // 粘性导航
+		  window.addEventListener('scroll', function() {
+		    const header = document.querySelector('header');
+		    const navbar = document.querySelector('.navbar');
+		    if (window.scrollY > 100) {
+		      header.classList.add('sticky');
+		      navbar.classList.add('sticky');
+		    } else {
+		      header.classList.remove('sticky');
+		      navbar.classList.remove('sticky');
+		    }
+		  });
+		
+		  // 平滑滚动导航链接
+		  document.querySelectorAll('.nav-link').forEach(link => {
+		    link.addEventListener('click', function(e) {
+		      e.preventDefault();
+		      const targetId = this.getAttribute('href');
+		      const targetSection = document.querySelector(targetId);
+		      
+		      window.scrollTo({
+		        top: targetSection.offsetTop - 80,
+		        behavior: 'smooth'
+		      });
+		      
+		      // 更新导航中的活动类
+		      document.querySelectorAll('.nav-link').forEach(item => {
+		        item.classList.remove('active');
+		      });
+		      this.classList.add('active');
+		    });
+		  });
+		
+		  // 移动端菜单切换
+		  const menuBtn = document.getElementById('menu-btn');
+		  const navList = document.querySelector('.navbar .list');
+		  
+		  if (menuBtn) {
+		    menuBtn.addEventListener('click', function() {
+		      navList.classList.toggle('active');
+		      menuBtn.classList.toggle('fa-times');
+		    });
+		  }
+		
+		  // 点击链接后关闭移动菜单
+		  document.querySelectorAll('.navbar .list a').forEach(link => {
+		    link.addEventListener('click', function() {
+		      navList.classList.remove('active');
+		      menuBtn.classList.remove('fa-times');
+		    });
+		  });
+		
+		  // 表单提交
+		  const contactForm = document.querySelector('.contact form');
+		  if (contactForm) {
+		    contactForm.addEventListener('submit', function(e) {
+		      e.preventDefault();
+		      // 这里通常会发送表单数据到服务器
+		      alert('消息发送成功！');
+		      this.reset();
+		    });
+		  }
+		});
+		
+		// 切换暗黑模式
+		function toggleDarkMode() {
+		  document.body.classList.toggle('dark');
+		  // 保存偏好到本地存储
+		  const isDark = document.body.classList.contains('dark');
+		  localStorage.setItem('darkMode', isDark);
+		}
+		
+		// 检查保存的暗黑模式偏好
+		if (localStorage.getItem('darkMode') === 'true') {
+		  document.body.classList.add('dark');
+		}
+
+		// 打开技能作品集弹窗
+		function openPortfolioModal(title, items) {
+		  const modal = document.getElementById('portfolioModal');
+		  const modalTitle = document.getElementById('portfolioModalTitle');
+		  const portfolioGrid = document.getElementById('portfolioGrid');
+		  
+		  // 阻止背景滚动
+		  document.body.classList.add('modal-open');
+		  
+		  modalTitle.textContent = title;
+		  portfolioGrid.innerHTML = '';
+		  
+		  // 先填充内容
+		  items.forEach(item => {
+		    const portfolioItem = document.createElement('div');
+		    portfolioItem.className = 'portfolio-item';
+		    portfolioItem.innerHTML = `
+		      <img src="${item.img}" alt="${item.title}" onclick="openWorkModal('${item.title}', '${item.img}', '${item.type}', ${item.video ? `'${item.video}'` : 'null'})">
+		      <div class="portfolio-overlay">${item.title}</div>
+		    `;
+		    portfolioGrid.appendChild(portfolioItem);
+		  });
+		  
+		  // 显示模态框
+		  modal.style.display = 'block';
+		  
+		  // 确保DOM更新后重置滚动 - 使用setTimeout确保在渲染后执行
+		  setTimeout(() => {
+		    // 尝试所有可能的滚动容器
+		    const scrollContainers = [
+		      document.querySelector('.portfolio-container'),
+		      document.querySelector('.modal-content'),
+		      document.querySelector('#portfolioModal')
+		    ];
+		    
+		    scrollContainers.forEach(container => {
+		      if (container) {
+		        container.scrollTop = 0;
+		      }
+		    });
+		    
+		    // 额外保险：直接滚动窗口到顶部
+		    // window.scrollTo(0, 0);
+		  }, 10);
+		}
+		
+    // 打开作品详情弹窗
+    function openWorkModal(title, img, type, videoUrl) {
+      const modal = document.getElementById('workModal');
+      const modalContent = document.getElementById('workModalContent');
+      
+      // 阻止背景滚动
+      document.body.classList.add('modal-open');
+      
+      if (type === 'video') {
+        modalContent.innerHTML = `
+          <div class="video-container">
+            <video class="video-player" controls autoplay>
+              <source src="${videoUrl}" type="video/mp4">
+              您的浏览器不支持视频播放。
+            </video>
+          </div>
+        `;
+      } else {
+        modalContent.innerHTML = `<img class="work-modal-content" src="${img}" alt="${title}">`;
+      }
+      
+      modal.style.display = 'block';
+    }
+
+    // 打开博客详情弹窗
+    function openBlogModal(title, date, img, content) {
+      const modal = document.getElementById('blogModal');
+      const modalTitle = document.getElementById('blogModalTitle');
+      const modalDate = document.getElementById('blogModalDate');
+      const modalImg = document.getElementById('blogModalImg');
+      const modalText = document.getElementById('blogModalText');
+      
+      // 阻止背景滚动
+      document.body.classList.add('modal-open');
+      
+      modalTitle.textContent = title;
+      modalDate.textContent = date;
+      modalImg.src = img;
+      modalText.innerHTML = content.replace(/\n\n/g, '<br><br>');
+      
+      modal.style.display = 'block';
+    }
+
+    // 关闭弹窗
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+      // 恢复背景滚动
+      document.body.classList.remove('modal-open');
+      
+      // 停止所有视频播放
+      if (modalId === 'workModal') {
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+          video.pause();
+        });
+      }
+    }
+
+    // 点击弹窗外部关闭弹窗
+    window.onclick = function(event) {
+      if (event.target.className === 'modal' || event.target.className === 'work-modal') {
+        event.target.style.display = 'none';
+        // 恢复背景滚动
+        document.body.classList.remove('modal-open');
+        
+        // 停止视频播放
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+          video.pause();
+        });
+      }
+    }
+	// 返回顶部按钮功能
+	const backToTopBtn = document.getElementById('back-to-top');
+	
+	// 监听滚动显示/隐藏按钮
+	window.addEventListener('scroll', () => {
+	  if (window.pageYOffset > 300) {
+	    backToTopBtn.classList.add('visible');
+	  } else {
+	    backToTopBtn.classList.remove('visible');
+	  }
+	});
+	
+	// 点击返回顶部
+	backToTopBtn.addEventListener('click', () => {
+	  window.scrollTo({
+	    top: 0,
+	    behavior: 'smooth' // 平滑滚动
+	  });
+	});
+	
+	</script>
+  </body>
+</html>
